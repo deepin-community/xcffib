@@ -1,0 +1,14 @@
+Description: without a config file, cabal doesn't try to update the cache over internet
+ This has been taken from the old 0.5.1 version of the package
+Author: Gianfranco Costamagna <locutusofborg@debian.org>
+--- xcffib-0.8.1.orig/Makefile
++++ xcffib-0.8.1/Makefile
+@@ -8,7 +8,7 @@ else
+ endif
+ NCPUS=$(shell grep -c processor /proc/cpuinfo)
+ PARALLEL=$(shell which parallel)
+-CABAL=cabal --config-file=./cabal.config
++CABAL=cabal --config-file=/dev/null
+ GEN=$(CABAL) new-run exe:xcffibgen --
+ 
+ # you should have xcb-proto installed to run this

@@ -1,0 +1,134 @@
+xcffib (0.8.1-0.8) unstable; urgency=medium
+
+  * Non-maintainer upload.
+  * Drop python2 support; Closes: #938840
+
+ -- Sandro Tosi <morph@debian.org>  Mon, 17 Feb 2020 01:30:44 -0500
+
+xcffib (0.8.1-0.7) unstable; urgency=medium
+
+  * Non-maintainer upload.
+  * debian/control
+    - remove python-flake8 from b-d, no longer needed
+
+ -- Sandro Tosi <morph@debian.org>  Fri, 14 Feb 2020 21:31:52 -0500
+
+xcffib (0.8.1-0.6) unstable; urgency=medium
+
+  * Non-maintainer upload.
+  * Remove build-depends on python-autopep8 (downgrades: 938840)
+  * Fix clean target.
+
+ -- Peter Michael Green <plugwash@debian.org>  Sun, 22 Dec 2019 01:57:12 +0000
+
+xcffib (0.8.1-0.5) unstable; urgency=medium
+
+  * Non-maintainer upload
+  * Run testsuite, to see if hangs are real or not
+    (they happened only once on a ppc64el launchpad instance, but it might
+     have been a network glitch)
+
+ -- Gianfranco Costamagna <locutusofborg@debian.org>  Sat, 07 Sep 2019 11:47:56 +0200
+
+xcffib (0.8.1-0.4) unstable; urgency=medium
+
+  * Non-maintainer upload
+  * Avoid internet connection by patching cabal to not use a configuration
+    file (Closes: #938982)
+  * Disable tests for now, they might hang
+
+ -- Gianfranco Costamagna <locutusofborg@debian.org>  Sat, 07 Sep 2019 08:59:04 +0200
+
+xcffib (0.8.1-0.3) unstable; urgency=medium
+
+  * Non-maintainer upload.
+  * Also export DISPLAY variable
+
+ -- Gianfranco Costamagna <locutusofborg@debian.org>  Fri, 26 Jul 2019 09:55:31 +0200
+
+xcffib (0.8.1-0.2) unstable; urgency=medium
+
+  * Non-maintainer upload
+  * Export fake $HOME directory to avoid poisoning non-existing homes.
+  * Bump xcb-types dependency to 0.10.0, to ensure the new version is picked
+    up (used in tests and xcffibgen)
+
+ -- Gianfranco Costamagna <locutusofborg@debian.org>  Fri, 26 Jul 2019 09:25:27 +0200
+
+xcffib (0.8.1-0.1) unstable; urgency=medium
+
+  * Non-maintainer upload
+  * New upstream release (Closes: #892648)
+  * Build it everywhere again (Closes: #914005)
+
+ -- Gianfranco Costamagna <locutusofborg@debian.org>  Wed, 24 Jul 2019 23:11:44 +0200
+
+xcffib (0.5.1-1) unstable; urgency=medium
+
+  * New upstream version (Closes: #839760, #839314, #866543)
+  * Removed redundant patch for big-endian architecture support
+    (now supported upstream)
+  * Added new build dependencies for libghc-{either,semigroups}-dev
+  * Dropped unneeded python{,3}-dev build dependencies (Closes: #866544)
+
+ -- Iain R. Learmonth <irl@debian.org>  Fri, 14 Jul 2017 23:17:41 +0100
+
+xcffib (0.4.2-2) unstable; urgency=medium
+
+  * Removed unnecessary depends on python{3,}-cffi. (Closes: #833163)
+  * Updated the Vcs-* fields to point to Debian packaging. (Closes: #837386)
+  * Added a patch to handle endianness in test cases.
+
+ -- Iain R. Learmonth <irl@debian.org>  Mon, 19 Sep 2016 11:59:15 +0100
+
+xcffib (0.4.2-1) unstable; urgency=medium
+
+  * New upstream version.
+  * debian/patches/language-python.patch:
+   - Removed this patch, newer haskell-language-python now in Debian.
+  * debian/control:
+   - Replaced maintainer with myself (adopting this package)
+   - Fixed capitalisation errors in package synopsis
+  * debian/copyright:
+   - Updated file paths, no new licenses
+
+ -- Iain R. Learmonth <irl@debian.org>  Sun, 29 May 2016 13:26:27 +0100
+
+xcffib (0.4.0-1.1) unstable; urgency=medium
+
+  * Non-maintainer upload.
+  * Only build for little-endian architectures. (Closes: #816139)
+
+ -- Iain R. Learmonth <irl@debian.org>  Thu, 28 Apr 2016 13:33:30 +0100
+
+xcffib (0.4.0-1) unstable; urgency=medium
+
+  * include length parameter as required as xpyb does
+  * fix struct packing for various extensions
+  * Closes: #805234
+
+ -- Tycho Andersen <tycho@tycho.ws>  Sun, 15 Nov 2015 18:17:57 -0700
+
+xcffib (0.3.6-1) unstable; urgency=medium
+
+  * Fix cffi/cairocffi dependency versions
+  * Use a .so name that exists in the non-dev packages
+  * Don't have a top level attribute called 'setup' so as to avoid confusing
+    nose.
+  * Closes: #796417
+
+ -- Tycho Andersen <tycho@tycho.ws>  Fri, 21 Aug 2015 23:39:38 +0000
+
+xcffib (0.3.4-1) unstable; urgency=medium
+
+  * Version bump for cffi 1.0 and upstream release.
+  * Closes: #790864
+
+ -- Tycho Andersen <tycho@tycho.ws>  Mon, 20 Jul 2015 00:28:04 +0000
+
+xcffib (0.2.0-1) unstable; urgency=low
+
+  * Initial release.
+  * Closes: #776178
+
+ -- Tycho Andersen <tycho@tycho.ws>  Sun, 15 Feb 2015 07:41:13 -0700

@@ -1,0 +1,17 @@
+#!/usr/bin/make -f
+
+export HOME=$(CURDIR)/debian/cabalconfig
+export DISPLAY=:0
+
+override_dh_auto_configure:
+	make xcffib
+	dh_auto_configure
+
+# we can't use setup.py clean here, since it checks for the existence of xcffib/
+override_dh_auto_clean:
+	make clean
+	rm -rf debian/cabalconfig
+	rm -rf .ghc.environment.*
+
+%:
+	dh $@ --with python3 --buildsystem=pybuild
