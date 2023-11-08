@@ -1,0 +1,3 @@
+Tests: run-unit-tests
+Depends: @, python3-all, python3-nose2, xvfb, x11-apps
+Restrictions: allow-stderr

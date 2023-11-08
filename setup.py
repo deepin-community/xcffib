@@ -50,17 +50,11 @@ if '_cffi_backend' in sys.builtin_module_names:
 else:
     requires_cffi = "cffi>=1.1.0"
 
-# PyPy < 2.6 hack, can be dropped when PyPy3 2.6 is released
-if requires_cffi.startswith("cffi==0."):
-    cffi_args = dict(
-        ext_package="xcffib"
-    )
-else:
-    cffi_args = dict(
-        cffi_modules=["xcffib/ffi_build.py:ffi"]
-    )
+cffi_args = dict(
+    cffi_modules=["xcffib/ffi_build.py:ffi"]
+)
 
-version = "0.8.1"
+version = "0.11.1"
 dependencies = ['six', requires_cffi]
 
 setup(
@@ -71,24 +65,24 @@ setup(
     license="Apache License 2.0",
     url="http://github.com/tych0/xcffib",
     author="Tycho Andersen",
-    author_email="tycho@tycho.ws",
+    author_email="tycho@tycho.pizza",
     install_requires=dependencies,
     setup_requires=dependencies,
     packages=['xcffib'],
+    package_data={'xcffib': ['py.typed']},
     zip_safe=False,
     cmdclass={
         'build': binding_build,
         'install': binding_install
     },
     classifiers=[
-        'Development Status :: 4 - Beta',
+        'Development Status :: 5 - Production/Stable',
         'License :: OSI Approved :: Apache Software License',
-        'Programming Language :: Python :: 2',
-        'Programming Language :: Python :: 2.7',
         'Programming Language :: Python :: 3',
-        'Programming Language :: Python :: 3.4',
-        'Programming Language :: Python :: 3.5',
         'Programming Language :: Python :: 3.6',
+        'Programming Language :: Python :: 3.7',
+        'Programming Language :: Python :: 3.8',
+        'Programming Language :: Python :: 3.9',
         'Programming Language :: Python :: Implementation :: CPython',
         'Programming Language :: Python :: Implementation :: PyPy',
         'Topic :: Software Development :: Libraries'
