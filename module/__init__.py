@@ -106,10 +106,11 @@ class Unpacker(object):
         self.offset += type_pad(size, self.offset)
 
     def unpack(self, fmt, increment=True):
+        fmt = "=" + fmt
         size = struct.calcsize(fmt)
         if size > self.size - self.offset:
             self._resize(size)
-        ret = struct.unpack_from("=" + fmt, self.buf, self.offset)
+        ret = struct.unpack_from(fmt, self.buf, self.offset)
 
         if increment:
             self.offset += size
@@ -636,8 +637,9 @@ class Connection(object):
         return lib.xcb_generate_id(self._conn)
 
     def disconnect(self):
-        self.invalid()
-        return lib.xcb_disconnect(self._conn)
+        if self._conn is not None:
+            lib.xcb_disconnect(self._conn)
+            self._conn = None
 
     def _process_error(self, c_error):
         self.invalid()

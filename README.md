@@ -1,4 +1,4 @@
-# xcffib [![Build Status](https://travis-ci.org/tych0/xcffib.svg?branch=master)](https://travis-ci.org/tych0/xcffib)
+# xcffib [![Build Status](https://github.com/tych0/xcffib/workflows/ci/badge.svg?branch=master)](https://github.com/tych0/xcffib/actions)
 
 `xcffib` is intended to be a (mostly) drop-in replacement for `xpyb`. `xpyb`
 has an inactive upstream, several memory leaks, is python2 only and doesn't
@@ -19,9 +19,9 @@ If you're interested in doing development, read on...
 
 ## Development dependencies
 
-You should be able to install all the language deps from hackage or pip. The
-[.travis.yaml](https://github.com/tych0/xcffib/blob/master/.travis.yml) has an
-example of how to install the dependencies on Ubuntu flavors.
+You should be able to install all the language deps from hackage or pip.
+[.github/workflows/ci.yaml](https://github.com/tych0/xcffib/blob/master/.github/workflows/ci.yaml)
+has an example of how to install the dependencies on Ubuntu flavors.
 
 ## Hacking
 
@@ -65,10 +65,9 @@ not public APIs, or not actually generated (in the case of the exceptions) by
   for a `<list type="char"/>`, you can use a python string literal. `xcffib`
   also gives you a string of length 1 out for each element in such a list,
   instead of an `int`. Finally, there is a helper method called `to_string` on
-  `xcffib.List`, to convert these string-like things into native strings. In
-  both python2 and python3 you get a native `str`. This means that for things
-  like `xproto.STR`, you can just do `the_str.name.to_string()` instead of
-  `''.join(map(chr, the_str.name))`.
+  `xcffib.List`, to convert these string-like things into native strings. This
+  means that for things like `xproto.STR`, you can just do
+  `the_str.name.to_string()` instead of `''.join(map(chr, the_str.name))`.
 * As above, `void` is also packed/unpacked as `char`s, since the convention is
   to use it as string data, e.g. in `xproto.ChangeProperty`.
 * The submodule `xcb` is gone. The top module re-exported all these constants
@@ -95,7 +94,7 @@ not public APIs, or not actually generated (in the case of the exceptions) by
   to actually catch if you wanted to handle an error. Instead, `FooError` and
   `BadFoo` are aliases, and both implement the X error object description and
   python Exception (via inheriting from `XcffibException`).
-* You can now create synthtic events. This makes it much easier to work with
+* You can now create synthetic events. This makes it much easier to work with
   `ClientMessageEvent`s. For example:
 
   ```python

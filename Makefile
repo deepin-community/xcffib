@@ -9,12 +9,13 @@ endif
 NCPUS=$(shell grep -c processor /proc/cpuinfo)
 PARALLEL=$(shell which parallel)
 CABAL=cabal --config-file=./cabal.config
-GEN=$(CABAL) new-run exe:xcffibgen --
+GEN=$(CABAL) new-run -j$(NCPUS) exe:xcffibgen --
 
 # you should have xcb-proto installed to run this
 xcffib: module/*.py
 	$(GEN) --input $(XCBDIR) --output ./xcffib
 	cp ./module/*py ./xcffib/
+	touch ./xcffib/py.typed
 	sed -i "s/__xcb_proto_version__ = .*/__xcb_proto_version__ = \"${XCBVER}\"/" xcffib/__init__.py
 	@if [ "$(TRAVIS)" = true ]; then python xcffib/ffi_build.py; else python xcffib/ffi_build.py > /dev/null 2>&1 || python3 xcffib/ffi_build.py; fi
 
@@ -31,7 +32,7 @@ dist-newstyle:
 
 .PHONY: gen
 gen: dist-newstyle
-	$(CABAL) new-build
+	$(CABAL) new-build -j$(NCPUS)
 
 .PHONY: clean
 clean:
@@ -41,13 +42,6 @@ clean:
 	-rm -rf test/*pyc test/__pycache__
 	-rm -rf build *egg* *deb .pybuild
 	-rm -rf .pc cabal.project.local*
-
-# A target for just running nosetests. Travis will run 'check', which does
-# everything. (Additionally, travis uses separate environments where nosetests
-# points to The Right Thing for each, so we don't need to do nosetests3.)
-pycheck: xcffib
-	nosetests -d
-	nosetests3 -d
 
 valgrind: xcffib
 	valgrind --leak-check=full --show-leak-kinds=definite nosetests -d
@@ -63,17 +57,10 @@ lint:
 
 .PHONY: htests
 htests:
-	$(CABAL) new-test
+	$(CABAL) new-test -j$(NCPUS) --enable-tests
 
 check: xcffib lint htests
-	nosetests -d -v
-
-deb:
-	git buildpackage --git-upstream-tree=master
-	lintian
-
-deb-src:
-	git buildpackage --git-upstream-tree=master -S
+	nose2 -v
 
 # make release ver=0.99.99
 release: xcffib
@@ -92,4 +79,5 @@ else
 	python3 setup.py sdist upload
 	cabal new-sdist
 	cabal upload --publish dist-newstyle/sdist/xcffib-${ver}.tar.gz
+	@echo "remember to push the tag!!!"
 endif

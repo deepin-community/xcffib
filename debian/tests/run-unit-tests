@@ -1,0 +1,19 @@
+#!/bin/bash
+set -e
+
+pkg=python3-xcffib
+CUR_DIR=`pwd`
+
+if [ "${AUTOPKGTEST_TMP}" = "" ] ; then
+  AUTOPKGTEST_TMP=$(mktemp -d /tmp/${pkg}-test.XXXXXX)
+  trap "rm -rf ${AUTOPKGTEST_TMP}" 0 INT QUIT ABRT PIPE TERM
+fi
+
+cd "${AUTOPKGTEST_TMP}"
+cp -a ${CUR_DIR}/test "${AUTOPKGTEST_TMP}"
+gunzip -r *
+
+for py in $(py3versions -s 2> /dev/null)
+do echo "Testing with $py in $(pwd):"
+    /usr/bin/nose2-3 -v
+done

@@ -1,1 +1,2 @@
-old-makefile.patch
+0001-disable-cabal-config-file.patch
+0002-add-xcb-length-element-to-parse-hs.patch

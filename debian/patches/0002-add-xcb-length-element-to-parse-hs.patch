@@ -1,0 +1,52 @@
+From fa529ce43a412094e4a6f0b1c33913c7c3ab8af0 Mon Sep 17 00:00:00 2001
+From: Tycho Andersen <tycho@tycho.pizza>
+Date: Sat, 2 Oct 2021 08:03:10 -0600
+Subject: [PATCH] don't die on xcb's new "length" element
+--- a/generator/Data/XCB/Python/Parse.hs
++++ b/generator/Data/XCB/Python/Parse.hs
+@@ -92,7 +92,7 @@
+     processXHeader :: XHeader
+                    -> State TypeInfoMap (String, Suite ())
+     processXHeader header = do
+-      let imports = [mkImport "xcffib", mkImport "struct", mkImport "six"]
++      let imports = [mkImport "xcffib", mkImport "struct", mkImport "io"]
+           version = mkVersion header
+           key = maybeToList $ mkKey header
+           globals = [mkDict "_events", mkDict "_errors"]
+@@ -294,6 +294,7 @@
+ structElemToPyUnpack _ _ _ (Doc _ _ _) = Left (Nothing, "")
+ -- XXX: What does fd mean? we should implement it correctly
+ structElemToPyUnpack _ _ _ (Fd _) = Left (Nothing, "")
++structElemToPyUnpack _ _ _ (Length _ _) = Left (Nothing, "")
+ 
+ -- The switch fields pick the way to expression to pack based on the expression
+ structElemToPyUnpack _ _ _ (Switch name expr _ bitcases) =
+@@ -352,9 +353,10 @@
+                                                                      [(Expr (), [GenStructElem Type])]
+                                                     )]
+ structElemToPyPack _ _ _ (Pad i) = Left (Nothing, mkPad i)
+--- TODO: implement doc and fd?
++-- TODO: implement these?
+ structElemToPyPack _ _ _ (Doc _ _ _) = Left (Nothing, "")
+ structElemToPyPack _ _ _ (Fd _) = Left (Nothing, "")
++structElemToPyPack _ _ _ (Length _ _) = Left (Nothing, "")
+ structElemToPyPack _ _ accessor (Switch n expr _ bitcases) =
+   let name = accessor n
+       cmp = xExpressionToPyExpr id expr
+@@ -428,7 +430,7 @@
+       "ValueParams other than CARD{16,32} not allowed.")
+ 
+ buf :: Suite ()
+-buf = [mkAssign "buf" (mkCall "six.BytesIO" noArgs)]
++buf = [mkAssign "buf" (mkCall "io.BytesIO" noArgs)]
+ 
+ mkPackStmts :: String
+             -> String
+@@ -646,6 +648,7 @@
+       getName (Switch n _ _ _) = Just n
+       getName (Doc _ _ _) = Nothing
+       getName (Fd n) = Just n
++      getName (Length _ _) = Nothing
+ 
+       assign :: String -> Statement ()
+       assign n = mkAssign (mkDot "self" n) $ mkName n

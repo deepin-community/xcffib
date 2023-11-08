@@ -1,3 +1,54 @@
+xcffib (0.11.1-4) unstable; urgency=medium
+
+  [ Debian Janitor ]
+  * debian/copyright: use spaces rather than tabs to start continuation lines.
+  * Set upstream metadata fields: Bug-Submit, Contact.
+  * Update standards version to 4.6.1, no changes needed.
+
+ -- Jelmer Vernooĳ <jelmer@debian.org>  Sun, 20 Nov 2022 12:31:19 +0000
+
+xcffib (0.11.1-3) unstable; urgency=medium
+
+  * Team Upload.
+  * Fix FTBFS with applying upstream commit as
+    patch for parse.hs (Closes: #1017252)
+
+ -- Nilesh Patra <nilesh@debian.org>  Thu, 13 Oct 2022 16:01:38 +0530
+
+xcffib (0.11.1-2) unstable; urgency=medium
+
+  * d/control: Set 'Architecture: all' and remove useless Depends
+
+ -- Jerome Lebleu <jerome@maroufle.fr>  Sun, 28 Nov 2021 12:12:23 +0100
+
+xcffib (0.11.1-1) unstable; urgency=medium
+
+  [ Jerome Lebleu ]
+  * New upstream version 0.11.1
+  * New maintainer (Closes: #952121)
+  * d/control:
+    + Switch to debhelper-compat and level 13
+    + Bump to Standards-Version 4.6.0
+    + Make the Description more informative
+    + Update the Build-Depends
+    + Update the Vcs-* fields to Salsa
+  * d/copyright: Use HTTPS in Format and Source
+  * d/upstream: Add a metadata file
+  * d/watch: Bump version to 4
+  * Remove unused debian/license-reconcile.yml
+
+  [ Nilesh Patra ]
+  * d/rules: s/make/MAKE
+  * d/control:
+    + B-D on nose2 instead of nose
+    + Annontate more test-only deps with nocheck
+    + Change VCS-URLs to DPT
+    + Set maintainer to DPT and uploader to Jerome
+  * Add autopkgtests
+  * Add d/salsa-ci.yml
+
+ -- Jerome Lebleu <jerome@maroufle.fr>  Sat, 27 Nov 2021 17:04:57 +0530
+
 xcffib (0.8.1-0.8) unstable; urgency=medium
 
   * Non-maintainer upload.
